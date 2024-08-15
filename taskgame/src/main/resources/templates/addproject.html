@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ADD NEW QUESTION</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #dd14eb, #4CAF50);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header, footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header {
+            box-shadow: 0 4px 2px -2px gray;
+        }
+
+        footer {
+            margin-top: auto;
+            box-shadow: 0 -4px 2px -2px gray;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"], input[type="radio"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #1e90ff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #007acc;
+        }
+
+        .options-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .options-container input[type="text"] {
+            width: calc(50% - 5px);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function toggleOptions() {
+            const questionType = document.querySelector('input[name="questionType"]:checked').value;
+            const isOneWord = questionType !== 'objective';
+            document.getElementById('option_a').disabled = isOneWord;
+            document.getElementById('option_b').disabled = isOneWord;
+            document.getElementById('option_c').disabled = isOneWord;
+            document.getElementById('option_d').disabled = isOneWord;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h2>TaskGame</h2>
+    </header>
+
+    <h1>ADD A NEW QUESTION</h1>
+
+    <form th:action="@{/addNewProject}" method="post" th:object="${qb}">
+        <label>ENTER THE QUESTION</label>
+        <input type="text" th:field="*{question}" placeholder="Enter your question"><br>
+        
+        <label>ENTER THE ANSWER</label>
+        <input type="text" th:field="*{answer}" placeholder="Enter the correct answer"><br>
+        
+        <label>QUESTION TYPE</label><br>
+        <input type="radio" th:field="*{questionType}" value="oneWord" onclick="toggleOptions()"> One Word<br>
+        <input type="radio" th:field="*{questionType}" value="objective" onclick="toggleOptions()"> Objective<br>
+        <input type="radio" th:field="*{questionType}" value="hackathon" onclick="toggleOptions()"> Hackathon<br>
+        <input type="radio" th:field="*{questionType}" value="speech" onclick="toggleOptions()"> Speech<br>
+        
+        <div class="options-container">
+            <label>OPTION A</label>
+            <input type="text" id="option_a" th:field="*{option_a}" placeholder="Option A"><br>
+            
+            <label>OPTION B</label>
+            <input type="text" id="option_b" th:field="*{option_b}" placeholder="Option B"><br>
+        </div>
+        
+        <div class="options-container">
+            <label>OPTION C</label>
+            <input type="text" id="option_c" th:field="*{option_c}" placeholder="Option C"><br>
+            
+            <label>OPTION D</label>
+            <input type="text" id="option_d" th:field="*{option_d}" placeholder="Option D"><br>
+        </div>
+        
+        <label>ENTER THE LEVEL</label>
+        <input type="number" th:field="*{level}" placeholder="Enter the difficulty level"><br>
+        
+        <input type="submit" value="ADD QUESTION">
+    </form>
+
+    <footer>
+        <p>&copy; 2024 TaskGame. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

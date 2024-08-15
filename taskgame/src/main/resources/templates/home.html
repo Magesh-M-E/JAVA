@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>HOME PAGE OF TASKGAME</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background: linear-gradient(135deg, #dd14eb, #4CAF50);
+                color: #333;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                background-size: 400% 400%;
+                animation: gradientBG 15s ease infinite;
+            }
+
+            @keyframes gradientBG {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            header, footer {
+                background-color: rgba(76, 175, 80, 0.9);
+                color: white;
+                text-align: center;
+                padding: 10px 0;
+                box-shadow: 0 4px 2px -2px gray;
+                width: 100%;
+            }
+
+            footer {
+                margin-top: auto;
+                box-shadow: 0 -4px 2px -2px gray;
+            }
+
+            main {
+                padding: 20px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            h1, h3 {
+                color: white;
+            }
+
+            a {
+                display: inline-block;
+                padding: 10px 20px;
+                margin: 20px 0;
+                color: #fff;
+                background-color: rgba(221, 20, 235, 0.9);
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+            a:hover {
+                background-color: rgba(69, 160, 73, 0.9);
+            }
+
+            .grid-container {
+                display: grid;
+                grid-template-columns: repeat(10, 1fr);
+                gap: 10px;
+                width: 80%;
+                margin-top: 20px;
+            }
+
+            .grid-item {
+                background-color: rgba(232, 245, 233, 0.9);
+                border: 1px solid #ddd;
+                padding: 20px;
+                text-align: center;
+                cursor: pointer;
+                transition: transform 0.2s, background-color 0.3s;
+                color: #333;
+            }
+            .grid-item div {
+                display: flex;
+                align-items: center; /* Aligns the image and text vertically centered */
+                justify-content: flex-start; /* Aligns items to the left */
+                margin-bottom: 10px; /* Adds space between different question types */
+            }
+            .grid-item img {
+                width: 30px; /* Adjust the width as needed */
+                height: auto; /* Keeps the aspect ratio */
+                margin-right: 10px; /* Adds space between images and text */
+                vertical-align: middle; /* Aligns images with text vertically */
+                }
+
+            .grid-item:hover {
+                transform: scale(1.1);
+                background-color: rgba(221, 221, 221, 0.9);
+            }
+            .points {
+                position: absolute;
+                top: 20px; 
+                right: 20px; 
+                text-align: right;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Welcome to TaskGame</h1>
+        </header>
+
+        <main>
+            <div class="points">
+                <h1>Your Points:</h1>
+                <h1 th:text="${currentPlayer.points}"></h1>
+            </div>
+            <h3 th:text="${name}"></h3>
+            <a th:href="@{/addproject}">Add Project</a>
+            <div class="grid-container">
+                <div class="grid-item" th:each="c : ${currentPlayer.cell}">
+                    <div th:each="entry : ${cellQbTypeCount[c.getId()]}">
+                        <img th:src="@{${questionTypeImages[entry.key]}}" alt="[[${entry.key}]]">
+                        <p>[[${entry.value}]]</p>
+                    </div>
+                    <a th:href="@{/showCell/{id}(id=${c.getId()})}">[[${c.getId()}]]</a> 
+                    <div th:each="entry : ${cellFinalQbTypeCount[c.getId()]}">
+                        <img th:src="@{${questionTypeImages[entry.key]}}">
+                        <p> [[${entry.value}]]</p>
+                    </div>
+                </div>
+            </div>   
+        </main>
+        <footer>
+            <p>&copy; 2024 TaskGame. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
