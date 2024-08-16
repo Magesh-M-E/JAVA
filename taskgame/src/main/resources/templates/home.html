@@ -103,7 +103,6 @@
                 right: 20px; 
                 text-align: right;
             }
-
         </style>
     </head>
     <body>
@@ -115,7 +114,7 @@
             <div class="points">
                 <h1>Your Points:</h1>
                 <h1 th:text="${currentPlayer.points}"></h1>
-            </div>
+            </div>\
             <h3 th:text="${name}"></h3>
             <a th:href="@{/addproject}">Add Project</a>
             <div class="grid-container">
