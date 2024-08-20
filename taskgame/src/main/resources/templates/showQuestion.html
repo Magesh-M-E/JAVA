@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Question Showing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e2e2e2 25%, #ffffff 75%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header, footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        header {
+            box-shadow: 0 4px 2px -2px gray;
+        }
+        footer {
+            margin-top: auto;
+            box-shadow: 0 -4px 2px -2px gray;
+        }
+        main {
+            padding: 20px;
+            flex: 1;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #dd14eb;
+        }
+        p {
+            color: #333;
+        }
+        a {
+            color: #dd14eb;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #45a049;
+        }
+        .form{
+            margin-bottom: 200px;
+            padding: 20px;
+        }
+        input{
+            size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="color: #ffffff;">TaskGame</h1>
+    </header>
+    <main>
+        <h1 th:text="${cellQB.id}"></h1><br>
+        <h1 th:text="${cellQB.question}"></h1>
+        <p th:if="${cellQB.option_a != null}"><h2 th:text="${cellQB.option_a}"></h2></p>
+        <p th:if="${cellQB.option_b != null}"><h2 th:text="${cellQB.option_b}"></h2></p>
+        <p th:if="${cellQB.option_c != null}"><h2 th:text="${cellQB.option_c}"></h2></p>
+        <p th:if="${cellQB.option_d != null}"><h2 th:text="${cellQB.option_d}"></h2></p>
+    </main>
+    <div class="form">
+        <form th:action="@{/answerCheck/{id}(id=${cellQB.id})}" method="get">
+            <label>Enter Answer</label>
+            <input type="text" name="answer">
+            <input type="submit" value="submit">
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 TaskGame. All rights reserved.</p>
+    </footer>
+</body>
+</html>
